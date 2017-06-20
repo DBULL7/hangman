@@ -1,5 +1,6 @@
 import os
 import random
+import getpass
 chances = 5
 
 os.system('clear')
@@ -8,7 +9,7 @@ print('Welcome to Hangman')
 
 words = ['howdy']
 
-answer = words[0]
+answer = getpass.getpass('Enter a Word:')
 guessedAnswer = '_'*len(answer)
 
 def makeGuess(answer):
@@ -21,6 +22,8 @@ def makeGuess(answer):
     print()
     guess = input().lower()
     if len(guess) > 1:
+        makeGuess(answer)
+    elif len(guess) < 1:
         makeGuess(answer)
     else:
         checkguess(guess, answer)
@@ -35,13 +38,13 @@ def checkguess(guess, answer):
         listify[guess_index] = guess
         joinGuessedAnswer = "".join(listify)
         guessedAnswer = joinGuessedAnswer
-        makeGuess(answer)
     else:
         global chances
         chances -= 1
         print('you have', chances, 'chances left')
         makeGuess(answer)
 
+    makeGuess(answer)
 
 def checkForWin(answer, guessedAnswer):
     if answer == guessedAnswer:
