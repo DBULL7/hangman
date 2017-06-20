@@ -6,16 +6,15 @@ chances = 5
 os.system('clear')
 
 print('Welcome to Hangman')
-
-words = ['howdy']
-
+print()
 answer = getpass.getpass('Enter a Word:')
-os.system('clear')
 guessedAnswer = '_'*len(answer)
+
 
 def makeGuess(answer):
     global guessedAnswer
     checkForWin(answer, guessedAnswer)
+    checkGameOver()
     print()
     print('Make a guess')
     print()
@@ -55,11 +54,16 @@ def checkForWin(answer, guessedAnswer):
         print()
         print('YOU WIN!')
         print()
-        print('Play Again? Y/N')
-        playAgain = input().lower()
-        if playAgain == 'y':
-            makeGuess(answer)
-        else:
-            exit()
+        exit()
+
+
+def checkGameOver():
+    global chances
+    if chances == 0:
+        print()
+        print('GAMEOVER. YOU DIED.')
+        print()
+        exit()
+
 
 makeGuess(answer)
