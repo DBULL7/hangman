@@ -10,6 +10,7 @@ print('Welcome to Hangman')
 words = ['howdy']
 
 answer = getpass.getpass('Enter a Word:')
+os.system('clear')
 guessedAnswer = '_'*len(answer)
 
 def makeGuess(answer):
@@ -17,6 +18,7 @@ def makeGuess(answer):
     checkForWin(answer, guessedAnswer)
     print()
     print('Make a guess')
+    print()
     print(guessedAnswer)
 
     print()
@@ -29,26 +31,28 @@ def makeGuess(answer):
         checkguess(guess, answer)
 
 def checkguess(guess, answer):
-    if guess in answer:
-        print('Got one!')
-        guess_index = answer.find(guess)
-
-        global guessedAnswer
-        listify = list(guessedAnswer)
-        listify[guess_index] = guess
-        joinGuessedAnswer = "".join(listify)
-        guessedAnswer = joinGuessedAnswer
-    else:
+    if guess not in answer:
         global chances
         chances -= 1
+        print()
         print('you have', chances, 'chances left')
         makeGuess(answer)
+    else:
+        for index, letter in enumerate(answer):
+            if guess == letter:
+                global guessedAnswer
+                listify = list(guessedAnswer)
+                listify[index] = guess
+                joinGuessedAnswer = "".join(listify)
+                guessedAnswer = joinGuessedAnswer
 
+    os.system('clear')
     makeGuess(answer)
 
 def checkForWin(answer, guessedAnswer):
     if answer == guessedAnswer:
         os.system('clear')
+        print()
         print('YOU WIN!')
         print()
         print('Play Again? Y/N')
