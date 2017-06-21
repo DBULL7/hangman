@@ -2,7 +2,7 @@ import os
 import random
 import getpass
 chances = 5
-
+previousGuesses = []
 os.system('clear')
 
 print('Welcome to Hangman')
@@ -19,6 +19,9 @@ def makeGuess(answer):
     print('Make a guess')
     print()
     print(guessedAnswer)
+    global previousGuesses
+    print()
+    print('Previous Guesses: ', previousGuesses)
 
     print()
     guess = input().lower()
@@ -29,12 +32,44 @@ def makeGuess(answer):
     else:
         checkguess(guess, answer)
 
+def printHangman(chances):
+    if chances == 4:
+        print('|')
+        print('|')
+        print('|')
+        print('|')
+    elif chances == 3:
+        print('|--')
+        print('|  o')
+        print('|')
+        print('|')
+    elif chances == 2:
+        print('|--')
+        print('|  o')
+        print('| \-/')
+        print('|')
+    elif chances == 1:
+        print('|--')
+        print('|  o')
+        print('| \/')
+        print('| /')
+    else:
+        print('|--')
+        print('|  o')
+        print('| \/')
+        print('| /\ ')
+        print('YOU DIED.')
+
+
 def checkguess(guess, answer):
     if guess not in answer:
         global chances
         chances -= 1
+        global previousGuesses
+        previousGuesses.append(guess)
         print()
-        print('you have', chances, 'chances left')
+        printHangman(chances)
+        # print('you have', chances, 'chances left')
         makeGuess(answer)
     else:
         for index, letter in enumerate(answer):
@@ -46,6 +81,7 @@ def checkguess(guess, answer):
                 guessedAnswer = joinGuessedAnswer
 
     os.system('clear')
+    previousGuesses.append(guess)
     makeGuess(answer)
 
 def checkForWin(answer, guessedAnswer):
