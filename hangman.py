@@ -3,7 +3,6 @@ import random
 import getpass
 chances = 5
 previousGuesses = []
-print('testing aliases')
 os.system('clear')
 
 print('Welcome to Hangman')
